@@ -34,6 +34,10 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testImplementation("io.mockk:mockk:1.14.2")
+	testImplementation("io.cucumber:cucumber-java:7.18.0")
+	testImplementation("io.cucumber:cucumber-spring:7.18.0")
+	testImplementation("io.cucumber:cucumber-junit-platform-engine:7.18.0")
+	testImplementation("org.junit.platform:junit-platform-suite:1.10.2")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
@@ -45,6 +49,7 @@ kotlin {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+	systemProperty("cucumber.junit-platform.naming-strategy", "long")
 	finalizedBy(tasks.jacocoTestReport)
 }
 
