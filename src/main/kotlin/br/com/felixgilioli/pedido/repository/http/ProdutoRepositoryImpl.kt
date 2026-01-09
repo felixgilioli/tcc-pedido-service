@@ -19,7 +19,7 @@ class ProdutoRepositoryImpl(
         if (ids.isEmpty()) return emptyList()
 
         val uri = UriComponentsBuilder
-            .fromUriString("http://pagamento-service.tcc.svc.cluster.local/v1/produto")
+            .fromUriString("http://fastfood-service.tcc.svc.cluster.local/v1/produto")
             .queryParam("ids", *ids.map { it.toString() }.toTypedArray())
             .build(true)
             .toUri()
