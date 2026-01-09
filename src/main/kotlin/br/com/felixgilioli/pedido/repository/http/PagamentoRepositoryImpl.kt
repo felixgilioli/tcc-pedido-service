@@ -18,7 +18,7 @@ class PagamentoRepositoryImpl(
         val valorTotal = requireNotNull(pedido.total) { "pedido.total não pode ser null para solicitar pagamento" }
 
         val uri = UriComponentsBuilder
-            .fromUriString("http://localhost:8082/v1/pagamento/solicitar")
+            .fromUriString("http://pagamento-service.tcc.svc.cluster.local/v1/pagamento/solicitar")
             .queryParam("pedidoId", pedidoId.toString())
             .queryParam("valorTotal", valorTotal.toPlainString())
             .build(true)
