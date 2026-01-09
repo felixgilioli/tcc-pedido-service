@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pedido-service-deployment
+  namespace: tcc
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pedido-service
+  template:
+    metadata:
+      labels:
+        app: pedido-service
+    spec:
+      containers:
+        - name: pedido-service
+          image: felixgilioli/pedido-service:latest
+          ports:
+            - containerPort: 8081
+          env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: pedido-service-secret
+                  key: DB_USER
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: pedido-service-secret
+                  key: DB_PASS
+          resources:
+            requests:
+              memory: "400Mi"
+              cpu: "125m"
+            limits:
+              memory: "600Mi"
+              cpu: "400m"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8081
+            initialDelaySeconds: 120
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8081
+            initialDelaySeconds: 5
+            periodSeconds: 5
